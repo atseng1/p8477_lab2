@@ -299,9 +299,9 @@ for (wk in 2:numWk){
 N = 1e5; I0 = 10; S0 = N-I0;
 state = c(S = S0,I = I0);
 parameters = c(beta = 0.5, gamma = 0.3);
-
 times = seq(0, 100, by = 1);
-sim = ode(y = state, times = times, func = SIR, parms = parameters);
+
+sim = ode(y = state, times = times, func = SIR_2, parms = parameters);
 s = sim[,'S']/N
 i = sim[,'I']/N
 
@@ -310,15 +310,15 @@ Iexp = sim[seq(1, length = WkExp, by = 7),'I'];
 # NOTE: THE TIME STEP IN THE SIMULATION IS DAY, BUT WE ARE LOOKING AT WEEK HERE
 # SO WE USE 'seq(1,length=WkExp,by=7)' TO EXTRACT THE CORRESPONDING DATE FOR EACH WEEK
 lnI = log(Iexp); # TAKE THE LOG
-tt = seq(1,length = WkExp, by = 7)
+tt = seq(1, length = WkExp, by = 7)
 fit = lm(lnI~tt) # LINEAR REGRESSION
 slope = fit$coeff[2] ## extract the slope for the linear regression
 
 par(mfrow = c(1,1), cex = 1.5)
-plot(tt,lnI,xlab = 'Time')
+plot(tt, lnI, xlab = 'Time')
 lines(tt, fit$coeff[1]+fit$coeff[2]*tt, col = 'red', lwd = 2)
 
-## NOW TRY HOW LONG THE EXPONENTIAL PERIOD CAN LAST BY CHANING WkExp by yourself
+## NOW TRY HOW LONG THE EXPONENTIAL PERIOD CAN LAST BY CHANGING WkExp by yourself
 
 
 ################################################################################
